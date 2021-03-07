@@ -2,6 +2,9 @@ package file
 
 import (
 	"bufio"
+	"bytes"
+	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"os"
@@ -87,6 +90,11 @@ func readContent(reader io.Reader) (*Content, error) {
 	if err != nil {
 		return nil, err
 	}
+	processedContent, err := processEnvs(string(bytes))
+	if err != nil {
+		return nil, fmt.Errorf("parsing file: %w", err)
+	}
+	bytes = []byte(processedContent)
 	err = validate(bytes)
 	if err != nil {
 		return nil, errors.Wrap(err, "validating file content")
@@ -131,4 +139,20 @@ func configFilesInDir(dir string) ([]string, error) {
 		return nil, errors.Wrap(err, "reading state directory")
 	}
 	return res, nil
+}
+
+func processEnvs(content string) (string, error) {
+	t := template.New("config").Funcs(template.FuncMap{
+		"env": os.Getenv,
+	}).Delims("${{", "}}")
+	t, err := t.Parse(content)
+	if err != nil {
+		return "", err
+	}
+	var buffer bytes.Buffer
+	err = t.Execute(&buffer, nil)
+	if err != nil {
+		return "", err
+	}
+	return buffer.String(), nil
 }

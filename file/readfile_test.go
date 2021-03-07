@@ -131,6 +131,7 @@ func Test_getContent(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
+		envVars map[string]string
 		want    *Content
 		wantErr bool
 	}{
@@ -167,6 +168,9 @@ func Test_getContent(t *testing.T) {
 		{
 			name: "single file",
 			args: args{[]string{"testdata/file.yaml"}},
+			envVars: map[string]string{
+				"SVC2_HOST": "2.example.com",
+			},
 			want: &Content{
 				Services: []FService{
 					{
@@ -197,6 +201,9 @@ func Test_getContent(t *testing.T) {
 		{
 			name: "multiple files",
 			args: args{[]string{"testdata/file.yaml", "testdata/file.json"}},
+			envVars: map[string]string{
+				"SVC2_HOST": "2.example.com",
+			},
 			want: &Content{
 				Services: []FService{
 					{
@@ -304,6 +311,12 @@ func Test_getContent(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			for k, v := range tt.envVars {
+				os.Setenv(k, v)
+				defer func(k string) {
+					os.Unsetenv(k)
+				}(k)
+			}
 			got, err := getContent(tt.args.filenames)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("getContent() error = %v, wantErr %v", err, tt.wantErr)

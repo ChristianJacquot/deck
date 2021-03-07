@@ -1,6 +1,6 @@
 services:
 - name: svc2
-  host: 2.example.com
+  host: ${{ env "SVC2_HOST" }}
   routes:
   - name: r2
     paths:
