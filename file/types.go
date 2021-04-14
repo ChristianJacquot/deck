@@ -527,6 +527,11 @@ func (s FServicePackage) id() string {
 	return ""
 }
 
+// FConsumer represents a consumer in Kong.
+type Developer struct {
+	kong.Consumer `yaml:",inline,omitempty"`
+}
+
 //go:generate go run ./codegen/main.go
 
 // Content represents a serialized Kong state.
