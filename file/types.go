@@ -527,9 +527,20 @@ func (s FServicePackage) id() string {
 	return ""
 }
 
-// FConsumer represents a consumer in Kong.
-type Developer struct {
-	kong.Consumer `yaml:",inline,omitempty"`
+// FDeveloper represents a developer in Kong.
+type FDeveloper struct {
+	kong.Developer `yaml:",inline,omitempty"`
+}
+
+// id is used for sorting.
+func (d FDeveloper) id() string {
+	if d.ID != nil {
+		return *d.ID
+	}
+	if d.Email != nil {
+		return *d.Email
+	}
+	return ""
 }
 
 //go:generate go run ./codegen/main.go
