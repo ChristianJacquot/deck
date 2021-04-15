@@ -60,6 +60,7 @@ func NewKongState() (*KongState, error) {
 			caCertTableName:                 caCertTableSchema,
 			pluginTableName:                 pluginTableSchema,
 			consumerTableName:               consumerTableSchema,
+			developerTableName:              developerTableSchema,
 			rbacRoleTableName:               rbacRoleTableSchema,
 			rbacEndpointPermissionTableName: rbacEndpointPermissionTableSchema,
 
