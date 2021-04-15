@@ -159,6 +159,10 @@ func (sc *Syncer) delete() error {
 	if err != nil {
 		return err
 	}
+	err = sc.deleteDevelopers()
+	if err != nil {
+		return err
+	}
 
 	// barrier for foreign relations
 	// routes must be deleted before services
@@ -235,6 +239,10 @@ func (sc *Syncer) createUpdate() error {
 		return err
 	}
 	err = sc.createUpdateUpstreams()
+	if err != nil {
+		return err
+	}
+	err = sc.createUpdateDevelopers()
 	if err != nil {
 		return err
 	}

@@ -22,6 +22,7 @@ type KongState struct {
 	CACertificates *CACertificatesCollection
 	Plugins        *PluginsCollection
 	Consumers      *ConsumersCollection
+	Developers     *DevelopersCollection
 
 	KeyAuths                *KeyAuthsCollection
 	HMACAuths               *HMACAuthsCollection
