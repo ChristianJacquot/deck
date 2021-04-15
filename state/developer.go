@@ -81,15 +81,15 @@ func getDeveloper(txn *memdb.Txn, IDs ...string) (*Developer, error) {
 	return nil, ErrNotFound
 }
 
-// Get gets a developer by name or ID.
-func (k *DevelopersCollection) Get(userNameOrID string) (*Developer, error) {
-	if userNameOrID == "" {
+// Get gets a developer by email or ID.
+func (k *DevelopersCollection) Get(userEmailOrID string) (*Developer, error) {
+	if userEmailOrID == "" {
 		return nil, errIDRequired
 	}
 
 	txn := k.db.Txn(false)
 	defer txn.Abort()
-	return getDeveloper(txn, userNameOrID)
+	return getDeveloper(txn, userEmailOrID)
 }
 
 // Update udpates an existing developer.
@@ -117,8 +117,8 @@ func (k *DevelopersCollection) Update(developer Developer) error {
 	return nil
 }
 
-func deleteDeveloper(txn *memdb.Txn, userNameOrID string) error {
-	developer, err := getDeveloper(txn, userNameOrID)
+func deleteDeveloper(txn *memdb.Txn, userEmailOrID string) error {
+	developer, err := getDeveloper(txn, userEmailOrID)
 	if err != nil {
 		return err
 	}
@@ -130,16 +130,16 @@ func deleteDeveloper(txn *memdb.Txn, userNameOrID string) error {
 	return nil
 }
 
-// Delete deletes a developer by name or ID.
-func (k *DevelopersCollection) Delete(userNameOrID string) error {
-	if userNameOrID == "" {
+// Delete deletes a developer by email or ID.
+func (k *DevelopersCollection) Delete(userEmailOrID string) error {
+	if userEmailOrID == "" {
 		return errIDRequired
 	}
 
 	txn := k.db.Txn(true)
 	defer txn.Abort()
 
-	err := deleteDeveloper(txn, userNameOrID)
+	err := deleteDeveloper(txn, userEmailOrID)
 	if err != nil {
 		return err
 	}
@@ -148,7 +148,7 @@ func (k *DevelopersCollection) Delete(userNameOrID string) error {
 	return nil
 }
 
-// GetAll gets a developer by name or ID.
+// GetAll gets a developer by email or ID.
 func (k *DevelopersCollection) GetAll() ([]*Developer, error) {
 	txn := k.db.Txn(false)
 	defer txn.Abort()

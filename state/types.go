@@ -532,7 +532,7 @@ type Developer struct {
 	Meta
 }
 
-// Identifier returns the endpoint key name or ID.
+// Identifier returns the endpoint key email or ID.
 func (d1 *Developer) Identifier() string {
 	if d1.Email != nil {
 		return *d1.Email
