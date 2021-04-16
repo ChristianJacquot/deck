@@ -442,6 +442,13 @@ func GetAllConsumers(ctx context.Context,
 	return consumers, nil
 }
 
+// GetAllDevelopers queries Kong for all the developers using client.
+// Please use this method with caution if you have a lot of developers.
+func GetAllDevelopers(ctx context.Context,
+	client *kong.Client) ([]*kong.Developer, error) {
+	return client.Developers.ListAll(ctx)
+}
+
 // GetAllUpstreams queries Kong for all the Upstreams using client.
 func GetAllUpstreams(ctx context.Context,
 	client *kong.Client, tags []string) ([]*kong.Upstream, error) {
