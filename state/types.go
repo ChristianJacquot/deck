@@ -546,16 +546,18 @@ func (d1 *Developer) Console() string {
 	return d1.Identifier()
 }
 
+// Equal returns true if d1 and d2 are equal.
+func (d1 *Developer) Equal(d2 *Developer) bool {
+	return d1.EqualWithOpts(d2, false, false, false, false)
+}
+
 // EqualWithOpts returns true if d1 and d2 are equal.
 // If ignoreID is set to true, IDs will be ignored while comparison.
 // If ignoreTS is set to true, timestamp fields will be ignored.
 func (d1 *Developer) EqualWithOpts(d2 *Developer,
-	ignoreID bool, ignoreTS bool) bool {
+	ignoreID bool, ignoreTS bool, ignorePassword bool, ignoreRBACUser bool) bool {
 	d1Copy := d1.Developer.DeepCopy()
 	d2Copy := d2.Developer.DeepCopy()
-
-	// sort.Slice(d1Copy.Tags, func(i, j int) bool { return *(d1Copy.Tags[i]) < *(d1Copy.Tags[j]) })
-	// sort.Slice(d2Copy.Tags, func(i, j int) bool { return *(d2Copy.Tags[i]) < *(d2Copy.Tags[j]) })
 
 	if ignoreID {
 		d1Copy.ID = nil
@@ -564,6 +566,14 @@ func (d1 *Developer) EqualWithOpts(d2 *Developer,
 	if ignoreTS {
 		d1Copy.CreatedAt = nil
 		d2Copy.CreatedAt = nil
+	}
+	if ignorePassword {
+		d1Copy.Password = nil
+		d2Copy.Password = nil
+	}
+	if ignoreRBACUser {
+		d1Copy.RbacUser = nil
+		d2Copy.RbacUser = nil
 	}
 	return reflect.DeepEqual(d1Copy, d2Copy)
 }

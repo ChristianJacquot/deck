@@ -64,6 +64,7 @@ func NewSyncer(current, target *state.KongState) (*Syncer, error) {
 	s.postProcess.MustRegister("ca_certificate", &caCertificatePostAction{current})
 	s.postProcess.MustRegister("plugin", &pluginPostAction{current})
 	s.postProcess.MustRegister("consumer", &consumerPostAction{current})
+	s.postProcess.MustRegister("developer", &developerPostAction{current})
 	s.postProcess.MustRegister("key-auth", &keyAuthPostAction{current})
 	s.postProcess.MustRegister("hmac-auth", &hmacAuthPostAction{current})
 	s.postProcess.MustRegister("jwt-auth", &jwtAuthPostAction{current})

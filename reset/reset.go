@@ -79,7 +79,7 @@ func Reset(state *utils.KongRawState, client *kong.Client) error {
 		return err
 	}
 
-	// Routes must be delted before services can be deleted
+	// Routes must be deleted before services can be deleted
 	for _, s := range state.Services {
 		err := client.Services.Delete(nil, s.ID)
 		if err != nil {
@@ -91,6 +91,14 @@ func Reset(state *utils.KongRawState, client *kong.Client) error {
 	// Certificates also removes SNIs
 	for _, u := range state.Certificates {
 		err := client.Certificates.Delete(nil, u.ID)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Deleting Developers
+	for _, d := range state.Developers {
+		err := client.Developers.Delete(nil, d.ID)
 		if err != nil {
 			return err
 		}

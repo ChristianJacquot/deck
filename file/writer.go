@@ -536,6 +536,18 @@ func populateConsumers(kongState *state.KongState, file *Content,
 		utils.MustRemoveTags(&c.Consumer, config.SelectTags)
 		file.Consumers = append(file.Consumers, c)
 	}
+
+	developers, err := kongState.Developers.GetAll()
+	if err != nil {
+		return err
+	}
+	for _, r := range developers {
+		r := FDeveloper{Developer: r.Developer}
+		utils.ZeroOutID(&r, r.Email, config.WithID)
+		utils.ZeroOutTimestamps(&r)
+		file.Developers = append(file.Developers, r)
+	}
+
 	rbacRoles, err := kongState.RBACRoles.GetAll()
 	if err != nil {
 		return err

@@ -83,7 +83,7 @@ func (sc *Syncer) createUpdateDeveloper(developer *state.Developer) (*Event, err
 	}
 
 	// found, check if update needed
-	if !currentDeveloper.EqualWithOpts(developerCopy, false, true) {
+	if !currentDeveloper.EqualWithOpts(developerCopy, false, true, true, true) {
 		return &Event{
 			Op:     crud.Update,
 			Kind:   "developer",

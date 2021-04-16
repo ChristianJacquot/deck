@@ -559,7 +559,8 @@ type Content struct {
 	Certificates   []FCertificate   `json:"certificates,omitempty" yaml:",omitempty"`
 	CACertificates []FCACertificate `json:"ca_certificates,omitempty" yaml:"ca_certificates,omitempty"`
 
-	RBACRoles []FRBACRole `json:"rbac_roles,omitempty" yaml:"rbac_roles,omitempty"`
+	Developers []FDeveloper `json:"developers,omitempty" yaml:",omitempty"`
+	RBACRoles  []FRBACRole  `json:"rbac_roles,omitempty" yaml:"rbac_roles,omitempty"`
 
 	PluginConfigs map[string]kong.Configuration `json:"_plugin_configs,omitempty" yaml:"_plugin_configs,omitempty"`
 

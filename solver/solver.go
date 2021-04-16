@@ -94,6 +94,7 @@ func buildRegistry(client *kong.Client, konnectClient *konnect.Client) *crud.Reg
 	r.MustRegister("acl-group", &aclGroupCRUD{client: client})
 	r.MustRegister("oauth2-cred", &oauth2CredCRUD{client: client})
 	r.MustRegister("mtls-auth", &mtlsAuthCRUD{client: client})
+	r.MustRegister("developer", &developerCRUD{client: client})
 	r.MustRegister("rbac-role", &rbacRoleCRUD{client: client})
 	r.MustRegister("rbac-endpointpermission", &rbacEndpointPermissionCRUD{client: client})
 

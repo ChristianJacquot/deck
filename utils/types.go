@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"github.com/kong/deck/konnect"
 	"net/http"
 	"net/url"
 	"os"
@@ -12,6 +11,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/kong/deck/konnect"
 
 	"github.com/kong/go-kong/kong"
 	"github.com/kong/go-kong/kong/custom"
@@ -43,6 +44,7 @@ type KongRawState struct {
 	Oauth2Creds []*kong.Oauth2Credential
 	MTLSAuths   []*kong.MTLSAuth
 
+	Developers              []*kong.Developer
 	RBACRoles               []*kong.RBACRole
 	RBACEndpointPermissions []*kong.RBACEndpointPermission
 }
